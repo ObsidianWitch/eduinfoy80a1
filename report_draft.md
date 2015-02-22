@@ -12,25 +12,46 @@ In this exercise, we had to find instances of design patterns in Jedit's code, J
 <!-- TODO in what way these implementations differ from the original pattern -->
 
 ## Singleton
+<!-- Related links :
+    * http://www.oodesign.com/singleton-pattern.html
+    * https://en.wikipedia.org/wiki/Singleton_pattern
+    * https://stackoverflow.com/questions/137975/what-is-so-bad-about-singletons
+    * http://tech.puredanger.com/2007/07/03/pattern-hate-singleton/
+    * http://programminglarge.com/singleton-design-pattern-vs-global-variable/
+    * http://gameprogrammingpatterns.com/singleton.html
+    * https://programmers.stackexchange.com/questions/148108/why-is-global-state-so-evil
+    * On dependency injection :
+        * http://www.theserverside.com/news/1321158/A-beginners-guide-to-Dependency-Injection
+        * http://www.drdobbs.com/tools/dependency-injection-testable-objects/185300375
+        * http://tutorials.jenkov.com/dependency-injection/index.html
+        * http://www.tonymarston.net/php-mysql/dependency-injection-is-evil.html
+        * https://stackoverflow.com/questions/2407540/what-are-the-downsides-to-using-dependency-injection
+        * http://www.warski.org/blog/2010/10/dependency-injection-discourages-object-oriented-programming/
+-->
+
 The singleton pattern is categorized as a creational pattern because it ensures that a specific class is **instantiated** only once.
 
-It is often criticized because an instance of a class using this pattern can be used like a global variable. A global variable causes problem for unit testing, because it can be modified by everyone and causes unpredictability in the state of the system. It also introduces coupling with classes using it, which renders them hardly reusable.
+It is often criticized because an instance of a class using this pattern can be used like a global variable. A global variable causes problem for unit testing, because it can be modified by everyone and causes unpredictability in the state of the system. It also introduces coupling with classes using it, which renders them hardly reusable. <!-- TODO ref -->
 
-While using global variables may be seen as bad practice, and while there are alternatives (e.g. dependency injection), these alternatives may bring drawbacks such as having the code difficult to read, or the intent of the developpers may not be easy to grasp at first glance.
+While using global variables may be seen as bad practice, and while there are alternatives (e.g. dependency injection), these alternatives may bring drawbacks such as having the code difficult to read, or the intent of the developpers may not be easy to grasp at first glance. Global variables may even be the simplest way of using tools such as a Logging class which is not directly part of the application but only here to help debugging. <!-- TODO ref -->
 
-The gist of it is that design patterns should be used with parcimony, and should not be treated like some unquestionable magical spell. They are recipes, and can be adapted and modified to fit more specific problems that a developer encounters. Also, each decision has associated drawbacks, there is no such thing as perfect code.
+<!-- The gist of it is that design patterns should be used with parcimony, and should not be treated like some unquestionable magical spell. They are recipes, and can be adapted and modified to fit more specific problems that a developer encounters. Also, each decision has associated drawbacks, there is no such thing as perfect design. -->
 
-Here's one example of a singleton implementation found in Jedit's code.
+The example we chose for a singleton implementation is the *PluginManager* class which is located in the *org.gjt.sp.jedit.pluginmgr* package. This class handles the window (extends *JFrame*) where plugins are installed and updated. The singleton pattern is used in this case so that only one plugin manager window can be instantiated and displayed at once when invoking it via the menu (*Plugins -> Plugin Manager...*). The following methods are involved :
 
-<!-- possible candidates :
-    * pluginmgr/PluginManager and showPluginManager() method
-    * ServicesManager with getService() method, Descriptor class (which is the singleton in itself) & serviceMap HashMap
-    * ReflectManager
-    * KillRing
-    * ModeProvider works like a singleton
-    * Registers.java uses datatransfer/TransferHandler (!not swing TransferHandler)
-    * gui/DockableWindowFactory (TODO see why public static **synchronized**) (used by DockableWindowManager & PluginJAR)
--->
+* the *showPluginManager()* method instantiate a PluginManager if it has not already been instantiated, else it brings the plugin manager window to the front;
+* The *getInstance()* method retrieve the current instance of PluginManager (can be null if it has not yet been instantiated or if the instance has been disposed of with the *dispose()* method).
+
+![Singleton Class Diagram](singleton.png)\
+
+The following classes are also implementing a singleton pattern, but we won't describe them in details.
+
+* *ServicesManager*'s *Descriptor* inner class (*org.gjt.sp.jedit*)
+* *ReflectManager* (*org.gjt.sp.jedit.bsh*)
+* *KillRing* (*org.gjt.sp.jedit.buffer*)
+* *ModeProvider* (*org.gjt.sp.jedit.syntax*)
+* *TransferHandler* (*org.gjt.sp.jedit.datatransfer*)
+* *DockableWindowFactory* (*org.gjt.sp.jedit.gui*)
 
 ## Abstract Factory
 * Creational
@@ -93,7 +114,6 @@ All that I described above need to be reviewed, because I did not look at the co
 # References
 <!-- TODO -->
 
-
 # Miscellaneous
 The following notes must not be included in the report, there are just some interesting things I noticed after searching information for this assignement.
 
@@ -112,9 +132,3 @@ The following notes must not be included in the report, there are just some inte
     * "Creational patterns are ones that create objects for you, rather than having you instantiate objects directly. This gives your program more flexibility in deciding which objects need to be created for a given case." (wikipedia)
     * "Structural: These concern class and object composition. They use inheritance to compose interfaces and define ways to compose objects to obtain new functionality." (wikipedia)
     * "Behavioral: Most of these design patterns are specifically concerned with communication between objects." (wikipedia)
-
-* On dependency injection
-    * http://www.theserverside.com/news/1321158/A-beginners-guide-to-Dependency-Injection
-    * http://www.drdobbs.com/tools/dependency-injection-testable-objects/185300375
-    * http://tutorials.jenkov.com/dependency-injection/index.html
-    * http://www.tonymarston.net/php-mysql/dependency-injection-is-evil.html
