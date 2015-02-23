@@ -37,7 +37,9 @@ While using global variables may be seen as bad practice, and while there are al
 
 <!-- The gist of it is that design patterns should be used with parcimony, and should not be treated like some unquestionable magical spell. They are recipes, and can be adapted and modified to fit more specific problems that a developer encounters. Also, each decision has associated drawbacks, there is no such thing as perfect design. -->
 
-The example we chose for a singleton implementation is the *PluginManager* class which is located in the *org.gjt.sp.jedit.pluginmgr* package. This class handles the window (extends *JFrame*) where plugins are installed and updated. The singleton pattern is used in this case so that only one plugin manager window can be instantiated and displayed at once when invoking it via the menu (*Plugins -> Plugin Manager...*). The following methods are involved :
+The example we chose for a singleton implementation is the *PluginManager*[^1] class. This class handles the window (extends *JFrame*) where plugins are installed and updated. The singleton pattern is used in this case so that only one plugin manager window can be instantiated and displayed at once when invoking it via the menu (*Plugins -> Plugin Manager...*). The following methods are involved :
+
+[^1]: *org.gjt.sp.jedit.pluginmgr* package
 
 * the *showPluginManager()* method instantiate a PluginManager if it has not already been instantiated, else it brings the plugin manager window to the front;
 * The *getInstance()* method retrieve the current instance of PluginManager (can be null if it has not yet been instantiated or if the instance has been disposed of with the *dispose()* method).
@@ -64,7 +66,11 @@ The following classes are also implementing a singleton pattern, but we won't de
 ## Observer
 The Observer is a behavioral pattern, it is justified by the fact that subjects communicate with observers to which they are registered.
 
-The example we chose for this pattern is composed of the *org.gjt.sp.jedit.Autosave*, *java.awt.event.ActionListener* & *javax.swing.Timer* classes. The *Autosave* class' purpose is to automatically save all buffers with unsaved changes after a certain amount of time has elapsed (default value is 30 secondes). This class implements the *ActionListener* (awt) interface which contains the *actionPerformed()* method. This method is called by a subject, here the subject being a *Timer* (swing) which calls *actionPerformed()* after the specified amount of time has elapsed. Finally, *actionPerformed()* calls the *autosave()* method on all the buffers (the buffers are globally accessible from *jEdit*'s *getBuffer()* static method).
+The example we chose for this pattern is composed of the *Autosave*[^2], *ActionListener*[^3] & *Timer*[^4] classes. The *Autosave* class' purpose is to automatically save all buffers with unsaved changes after a certain amount of time has elapsed (default value is 30 secondes). This class implements the *ActionListener* (awt) interface which contains the *actionPerformed()* method. This method is called by a subject, here the subject being a *Timer* (swing) which calls *actionPerformed()* after the specified amount of time has elapsed. Finally, *actionPerformed()* calls the *autosave()* method on all the buffers (the buffers are globally accessible from *jEdit*'s *getBuffer()* static method).
+
+[^2]: *org.gjt.sp.jedit.Autosave*
+[^3]: *java.awt.event.ActionListener*
+[^4]: *javax.swing.Timer*
 
 ![Observer Class Diagram](images/observer.png)\
 
@@ -76,7 +82,10 @@ The following classes are also implementing an observer pattern but were not cho
 ## Adapter
 The adapter pattern is a structural pattern used to pass an instance of a class having an interface to a client expecting another interface through a wrapper.
 
-Here we have the *org.gjt.sp.jedit.buffer.BufferAdapter* class which implements the *org.gjt.sp.jedit.buffer.BufferListener* interface. This class contains all the *BufferListener*'s methods with empty bodies. Then, one class can inherit from *BufferAdapter* in order to avoid having to implement all *BufferListener*'s methods (e.g. *org.gjt.sp.jedit.textarea.ElasticTabStopBufferListener*, or the anonymous class in the *org.gjt.sp.jedit.textarea.Gutter* class' constructor). As stated in *BufferListener*'s documentation, this interface may change in the future. By using *BufferAdapter* instead of *BufferListener* as the expected interface, developpers will only have to modify *BufferAdapter* if *BufferListener* is modified.
+Here we have the *BufferAdapter*[^5] class which implements the *BufferListener*[^5] interface. This class contains all the *BufferListener*'s methods with empty bodies. Then, one class can inherit from *BufferAdapter* in order to avoid having to implement all *BufferListener*'s methods (e.g. *ElasticTabStopBufferListener*[^6], or the anonymous class in the *Gutter*[^6] class' constructor). As stated in *BufferListener*'s documentation, this interface may change in the future. By using *BufferAdapter* instead of *BufferListener* as the expected interface, developpers will only have to modify *BufferAdapter* if *BufferListener* is modified.
+
+[^5]: *org.gjt.sp.jedit.buffer* package
+[^6]: *org.gjt.sp.jedit.textarea* package
 
 <!-- TODO this implementation corresponds to the Class Adapter described on the wikipedia page but differs from the one described in the *Head First Design Patterns* book -> find more information -->
 
@@ -84,8 +93,8 @@ Here we have the *org.gjt.sp.jedit.buffer.BufferAdapter* class which implements 
 
 Other Adapter patterns were found in jedit's code which have the same purpose as described above :
 
-* *org.gjt.sp.jedit.bufferset.BufferSetAdapter* implementing *org.gjt.sp.jedit.bufferset.BufferSetListener*
-* *org.gjt.sp.jedit.visitors.JEditVisitorAdapter* implementing *org.gjt.sp.jedit.visitors.JEditVisitor*
+* *BufferSetAdapter* implementing *BufferSetListener* (*org.gjt.sp.jedit.bufferset*)
+* *JEditVisitorAdapter* implementing *JEditVisitor* (*org.gjt.sp.jedit.visitors*)
 
 ## Visitor
 * Behavioral
