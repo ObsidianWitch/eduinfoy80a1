@@ -62,33 +62,30 @@ The following classes are also implementing a singleton pattern, but we won't de
 <!-- TODO see all the factories in gui/statusbar -->
 
 ## Observer
-* Behavioral
-<!-- possible candidates :
-    * BufferListener & BufferUndoListener
-    *  PluginManagerProgress which implements ProgressObserver, MirrorList is a subject?
-    * RegistersListener & JEditRegistersListener
-    * AutoSave is a java.awt.event.ActionListener
-    * BrowserListener is a java.util.EventListener
-    * VFSDirectoryEntryTable::MainMouseHandler is a javax.swing.event.MouseInputAdapter
-    * VFSBrowser uses javax.swing.event.EventListenerList and VFSBrowser::ActionHandler which implements ActionListener & ItemListener
-    * HelpHistoryModelListener
-    * BufferSetListener & BufferSetAdapter
-    * and a shitload of other examples
--->
+The Observer is a behavioral pattern, it is justified by the fact that subjects communicate with observers to which they are registered.
+
+The example we chose for this pattern is composed of the *org.gjt.sp.jedit.Autosave*, *java.awt.event.ActionListener* & *javax.swing.Timer* classes. The *Autosave* class' purpose is to automatically save all buffers with unsaved changes after a certain amount of time has elapsed (default value is 30 secondes). This class implements the *ActionListener* (awt) interface which contains the *actionPerformed()* method. This method is called by a subject, here the subject being a *Timer* (swing) which calls *actionPerformed()* after the specified amount of time has elapsed. Finally, *actionPerformed()* calls the *autosave()* method on all the buffers (the buffers are globally accessible from *jEdit*'s *getBuffer()* static method).
+
+![Observer Class Diagram](observer.png)\
+
+The following classes are also implementing an observer pattern but were not chosen as our example.
+
+* *RegistersListener* as the observer interface, *JEditRegistersListener* as the concrete observer, and *Registers* as the subject
+* *HelpHistoryModelListener* as the observer interface, *HelpViewer* as the concrete observer and *HelpHistoryModel* as the subhect (*org.gjt.sp.jedit.help*)
 
 ## Adapter
-* Structural
-<!-- possible candidates :
-    * BufferAdapter
-    * BufferSetAdapter
-    * JEditVisitorAdapter
--->
+The adapter pattern is a structural pattern used to pass an instance of a class having an interface to a client expecting another interface through a wrapper.
 
-<!--
-It seems the word Adapter is used differently than waht is described by the pattern. It seems to describe an abstract class implementing an interface, and the methods' bodies are empty. It's a way to bypass the interface, and not enforce the implementation of all the methods... One of the reasons invoked is that the interface may change a lot later because it's still in development. It seems kinda bad, why bother describing an interface if it's not to use it correctly ? And why did this feature got released if it's still a work in progress? In should have stayed in a dev branch.
+Here we have the *org.gjt.sp.jedit.buffer.BufferAdapter* class which implements the *org.gjt.sp.jedit.buffer.BufferListener* interface. This class contains all the *BufferListener*'s methods with empty bodies. Then, one class can inherit from *BufferAdapter* in order to avoid having to implement all *BufferListener*'s methods (e.g. *org.gjt.sp.jedit.textarea.ElasticTabStopBufferListener*, or the anonymous class in the *org.gjt.sp.jedit.textarea.Gutter* class' constructor). As stated in *BufferListener*'s documentation, this interface may change in the future. By using *BufferAdapter* instead of *BufferListener* as the expected interface, developpers will only have to modify *BufferAdapter* if *BufferListener* is modified.
 
-All that I described above need to be reviewed, because I did not look at the code in details. It's only what I could glimpse by skimming quickly through some classes.
--->
+<!-- TODO this implementation corresponds to the Class Adapter described on the wikipedia page but differs from the one described in the *Head First Design Patterns* book -> find more information --> 
+
+![Adapter Class Diagram](adapter.png)\
+
+Other Adapter patterns were found in jedit's code which have the same purpose as described above :
+
+* *org.gjt.sp.jedit.bufferset.BufferSetAdapter* implementing *org.gjt.sp.jedit.bufferset.BufferSetListener*
+* *org.gjt.sp.jedit.visitors.JEditVisitorAdapter* implementing *org.gjt.sp.jedit.visitors.JEditVisitor*
 
 ## Visitor
 * Behavioral
