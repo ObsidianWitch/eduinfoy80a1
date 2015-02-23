@@ -56,10 +56,13 @@ The following classes are also implementing a singleton pattern, but we won't de
 * *DockableWindowFactory* (*org.gjt.sp.jedit.gui*)
 
 ## Abstract Factory
-* Creational
-* ServiceManager
-    * "Provide an interface for creating families of related or dependent objects without specifying their concrete classes." -> here we create related objects which are the services
-* deviation from original pattern: no abstract class from which the ServiceManager inherits
+The abstract factory pattern is a creationnal pattern in that it helps create factories which are related (by a theme or which are dependant) and the objects associated with these. <!-- TODO reword it -->
+
+The example found in jEdit's code is centered around the *ServiceManager* class. Services are specified in files named *services.xml*. This file specifies the services' class or factory class, name and way of instantiating it (constructor to call). Each service is a singleton handled by the *ServiceManager*.
+
+<!-- TODO UML diagram -->
+
+* deviation from original pattern: no abstract class from which the ServiceManager inherits, only ServiceManager is used
 <!-- TODO see in more details how ServiceManager works -->
 <!-- TODO see all the factories in gui/statusbar -->
 
