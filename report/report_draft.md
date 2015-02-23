@@ -42,7 +42,7 @@ The example we chose for a singleton implementation is the *PluginManager* class
 * the *showPluginManager()* method instantiate a PluginManager if it has not already been instantiated, else it brings the plugin manager window to the front;
 * The *getInstance()* method retrieve the current instance of PluginManager (can be null if it has not yet been instantiated or if the instance has been disposed of with the *dispose()* method).
 
-![Singleton Class Diagram](singleton.png)\
+![Singleton Class Diagram](images/singleton.png)\
 
 The following classes are also implementing a singleton pattern, but we won't describe them in details.
 
@@ -66,7 +66,7 @@ The Observer is a behavioral pattern, it is justified by the fact that subjects 
 
 The example we chose for this pattern is composed of the *org.gjt.sp.jedit.Autosave*, *java.awt.event.ActionListener* & *javax.swing.Timer* classes. The *Autosave* class' purpose is to automatically save all buffers with unsaved changes after a certain amount of time has elapsed (default value is 30 secondes). This class implements the *ActionListener* (awt) interface which contains the *actionPerformed()* method. This method is called by a subject, here the subject being a *Timer* (swing) which calls *actionPerformed()* after the specified amount of time has elapsed. Finally, *actionPerformed()* calls the *autosave()* method on all the buffers (the buffers are globally accessible from *jEdit*'s *getBuffer()* static method).
 
-![Observer Class Diagram](observer.png)\
+![Observer Class Diagram](images/observer.png)\
 
 The following classes are also implementing an observer pattern but were not chosen as our example.
 
@@ -78,9 +78,9 @@ The adapter pattern is a structural pattern used to pass an instance of a class 
 
 Here we have the *org.gjt.sp.jedit.buffer.BufferAdapter* class which implements the *org.gjt.sp.jedit.buffer.BufferListener* interface. This class contains all the *BufferListener*'s methods with empty bodies. Then, one class can inherit from *BufferAdapter* in order to avoid having to implement all *BufferListener*'s methods (e.g. *org.gjt.sp.jedit.textarea.ElasticTabStopBufferListener*, or the anonymous class in the *org.gjt.sp.jedit.textarea.Gutter* class' constructor). As stated in *BufferListener*'s documentation, this interface may change in the future. By using *BufferAdapter* instead of *BufferListener* as the expected interface, developpers will only have to modify *BufferAdapter* if *BufferListener* is modified.
 
-<!-- TODO this implementation corresponds to the Class Adapter described on the wikipedia page but differs from the one described in the *Head First Design Patterns* book -> find more information --> 
+<!-- TODO this implementation corresponds to the Class Adapter described on the wikipedia page but differs from the one described in the *Head First Design Patterns* book -> find more information -->
 
-![Adapter Class Diagram](adapter.png)\
+![Adapter Class Diagram](images/adapter.png)\
 
 Other Adapter patterns were found in jedit's code which have the same purpose as described above :
 
