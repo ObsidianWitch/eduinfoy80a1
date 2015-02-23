@@ -68,6 +68,8 @@ The Observer is a behavioral pattern, it is justified by the fact that subjects 
 
 The example we chose for this pattern is composed of the *Autosave*[^2], *ActionListener*[^3] & *Timer*[^4] classes. The *Autosave* class' purpose is to automatically save all buffers with unsaved changes after a certain amount of time has elapsed (default value is 30 secondes). This class implements the *ActionListener* (awt) interface which contains the *actionPerformed()* method. This method is called by a subject, here the subject being a *Timer* (swing) which calls *actionPerformed()* after the specified amount of time has elapsed. Finally, *actionPerformed()* calls the *autosave()* method on all the buffers (the buffers are globally accessible from *jEdit*'s *getBuffer()* static method).
 
+<!-- TODO purpose, why is this pattern used here? -->
+
 [^2]: *org.gjt.sp.jedit.Autosave*
 [^3]: *java.awt.event.ActionListener*
 [^4]: *javax.swing.Timer*
@@ -80,6 +82,12 @@ The following classes are also implementing an observer pattern but were not cho
 * *HelpHistoryModelListener* as the observer interface, *HelpViewer* as the concrete observer and *HelpHistoryModel* as the subhect (*org.gjt.sp.jedit.help*)
 
 ## Adapter
+<!-- Related links:
+    * http://www.oodesign.com/visitor-pattern.html
+    * https://en.wikipedia.org/wiki/Visitor_pattern
+    * http://sourcemaking.com/design_patterns/visitor
+-->
+
 The adapter pattern is a structural pattern used to pass an instance of a class having an interface to a client expecting another interface through a wrapper.
 
 Here we have the *BufferAdapter*[^5] class which implements the *BufferListener*[^5] interface. This class contains all the *BufferListener*'s methods with empty bodies. Then, one class can inherit from *BufferAdapter* in order to avoid having to implement all *BufferListener*'s methods (e.g. *ElasticTabStopBufferListener*[^6], or the anonymous class in the *Gutter*[^6] class' constructor). As stated in *BufferListener*'s documentation, this interface may change in the future. By using *BufferAdapter* instead of *BufferListener* as the expected interface, developpers will only have to modify *BufferAdapter* if *BufferListener* is modified.
@@ -97,10 +105,19 @@ Other Adapter patterns were found in jedit's code which have the same purpose as
 * *JEditVisitorAdapter* implementing *JEditVisitor* (*org.gjt.sp.jedit.visitors*)
 
 ## Visitor
-* Behavioral
-<!-- possible candidates :
-    * visitors folder
--->
+The visitor design pattern is a behavioral pattern, its purpose being to separate algorithms from an object structure (e.g. composite).
+
+In jEdit's case, the object structure is composed of the following classes: *View*, *EditPane* and *TextArea*[^6]. The visitor interface is called *JEditVisitor*[^7] and some concrete implementations are *SaveCaretInfoVisitor* and some anonymous classes. The purpose of this design pattern here is to have multiple operations available for an element without having to modify it. As of jEdit's 5.2 version :
+* *View* is only visited to visit its *EditPanes* and the *EditPanes*' *TextAreas*
+* *TextArea* does not seem to have any behaviour added through the visitors for the moment
+* *EditPanes* as several behaviours added through *SaveCaretInfoVisitor* and other anonymous classes implementing *JEditVisitor* (e.g. in *BufferSetManager*, *CompleteWorld* and *Buffer*).
+
+[^6]: *org.gjt.sp.jedit.textarea* package
+[^7]: *org.gjt.sp.jedit.visitors* package
+
+![Visitor Class Diagram](images/visitor.png)\
+
+As for the differences with the original pattern, the elements from the object structure being visited do not implement a common interface.
 
 # Exercise 2: Recognize Design Patterns
 <!-- TODO -->
@@ -138,3 +155,5 @@ The following notes must not be included in the report, there are just some inte
     * "Creational patterns are ones that create objects for you, rather than having you instantiate objects directly. This gives your program more flexibility in deciding which objects need to be created for a given case." (wikipedia)
     * "Structural: These concern class and object composition. They use inheritance to compose interfaces and define ways to compose objects to obtain new functionality." (wikipedia)
     * "Behavioral: Most of these design patterns are specifically concerned with communication between objects." (wikipedia)
+
+* [UML Class Diagram: Association, Aggregation and Composition](http://aviadezra.blogspot.be/2009/05/uml-association-aggregation-composition.html)
