@@ -126,10 +126,23 @@ The inner classes *Edit*, *Insert*, *Remove*, *Replace*, *CompressedReplace*, *C
 The *Edit* abstract class and its children are part of a composite design pattern, which is a structural pattern. In this implementation, there are no leafs, only composite elments (*Edit* and its children). This pattern is used here in order to retrieve the previous and next *Edit*, which is useful for implementing the redo and undo queues.
 
 # Exercise 3: Coupling & Cohesion
-<!-- TODO -->
+
+## Levels of coupling and cohesion
 <!--
- * high cohesion and loose coopling are preferable + TODO explanations
+ Related links
+    * https://stackoverflow.com/questions/39946/coupling-and-cohesion
+    * https://stackoverflow.com/questions/3085285/cohesion-coupling
 -->
+
+**Cohesion** refers to how related attributes and methods are within a class and if they are responding to the class' intention. **High cohesion**, which is preferable, means that a class does one specific job well. Low cohesion, which should be avoided, means that the class is not focused on one thing and could be refactored. For example, an *User* class containing attributes such as the name or the email address and methods for sending messages to other users has a low cohesion, since message handling could be refactored and done by other classes.
+
+**Coupling** refers to the dependencies between classes. Highly coupled classes cannot be used independently, consequently changes to those classes are difficult to make without having to modify all the dependent classes. It's also hard to reuse classes with high coupling because all the dependencies must be carried with them. So, we should try to have **low coupling** between the modules in our programms.
+
+## Cohesion in jEdit
+<!-- TODO -->
+
+## Coupling in jEdit
+<!-- TODO -->
 
 # References
 <!-- TODO -->
