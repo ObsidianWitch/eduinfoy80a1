@@ -48,7 +48,6 @@ The example we chose for a singleton implementation is the *PluginManager*[^1] c
 
 The following classes are also implementing a singleton pattern, but we won't describe them in details.
 
-* *ServicesManager*'s *Descriptor* inner class (*org.gjt.sp.jedit*)
 * *ReflectManager* (*org.gjt.sp.jedit.bsh*)
 * *KillRing* (*org.gjt.sp.jedit.buffer*)
 * *ModeProvider* (*org.gjt.sp.jedit.syntax*)
@@ -56,11 +55,11 @@ The following classes are also implementing a singleton pattern, but we won't de
 * *DockableWindowFactory* (*org.gjt.sp.jedit.gui*)
 
 ## Abstract Factory
-The abstract factory pattern is a creationnal pattern in that it helps create factories which are related (by a theme or which are dependant) and the objects associated with these. <!-- TODO reword it -->
+The abstract factory pattern is a creationnal pattern which helps creating factories which are related (by a theme or which are dependant) and the associated objets.
 
-The example found in jEdit's code is centered around the *ServiceManager* class. Services are specified in files named *services.xml*. This file specifies the services' class or factory class, name and way of instantiating it (constructor to call). Each service is a singleton handled by the *ServiceManager*.
+The example found in jEdit's code is centered around the *ServiceManager* class. Services are specified in files named *services.xml*. This file specifies the services' class or factory class, name and way of instantiating it (constructor to call). Each service is a singleton handled by the *ServiceManager*. By loading services through an XML file, the program handles the instantiation of services the same way for all services. Moreover, the program's code does not need to be modified to add a service, only the xml must be modified; hence, the *ServiceManager* does not need to depend on all the services' factories and the coupling is reduced.
 
-<!-- TODO UML diagram -->
+![Abstract Factory Class Diagram](images/abstractfactory.png)\
 
 * deviation from original pattern: no abstract class from which the ServiceManager inherits, only ServiceManager is used
 <!-- TODO see in more details how ServiceManager works -->
