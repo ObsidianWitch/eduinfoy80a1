@@ -61,14 +61,12 @@ The example found in jEdit's code is centered around the *StatusWidgetFactory* i
 
 ![Abstract Factory Class Diagram](images/abstractfactory.png)\
 
-**N.B.** Statusbar widgets also seem to be used as services and are listed in the *services.xml* file. This file specifies the services' classes or factory classes, namees and way of instantiating them (constructor to call). Each service is a singleton handled by the *ServiceManager*. By loading services through an XML file, the program handles the instantiation of services the same way for all services. Moreover, the program's code does not need to be modified to add a service, only the xml must be modified; hence, the *ServiceManager* does not need to depend on all the services' factories and the coupling is reduced.
+**N.B.** Statusbar widgets also seem to be used as services and are listed in the *services.xml* file. This file specifies the services' classes or factory classes, namees and ways of instantiating them (constructor to call). Each service is a singleton handled by the *ServiceManager*. By loading services through an XML file, the program handles the instantiation of services the same way for all services. Moreover, the program's code does not need to be modified to add a service, only the xml must be modified; hence, the *ServiceManager* does not need to depend on all the services' factories and the coupling is reduced.
 
 ## Observer
 The Observer is a behavioral pattern, it is justified by the fact that subjects communicate with observers to which they are registered.
 
-The example we chose for this pattern is composed of the *Autosave*[^2], *ActionListener*[^3] & *Timer*[^4] classes. The *Autosave* class' purpose is to automatically save all buffers with unsaved changes after a certain amount of time has elapsed (default value is 30 secondes). This class implements the *ActionListener* (awt) interface which contains the *actionPerformed()* method. This method is called by a subject, here the subject being a *Timer* (swing) which calls *actionPerformed()* after the specified amount of time has elapsed. Finally, *actionPerformed()* calls the *autosave()* method on all the buffers (the buffers are globally accessible from *jEdit*'s *getBuffer()* static method).
-
-<!-- TODO purpose, why is this pattern used here? -->
+The example we chose for this pattern is composed of the *Autosave*[^2], *ActionListener*[^3] & *Timer*[^4] classes. The *Autosave* class' purpose is to automatically save all buffers with unsaved changes after a certain amount of time has elapsed (default value is 30 secondes). This class implements the *ActionListener* (awt) interface which contains the *actionPerformed()* method. This method is called by a subject, here the subject being a *Timer* (swing) which calls *actionPerformed()* after the specified amount of time has elapsed. Finally, *actionPerformed()* calls the *autosave()* method on all the buffers (the buffers are globally accessible from *jEdit*'s *getBuffer()* static method). The Observer pattern is a way of avoid busy-waiting, instead of checking repeatedly whether the time has elapsed, it lets the *Timer* notify that he has finished counting to its listeners (*Autosave*).
 
 [^2]: *org.gjt.sp.jedit.Autosave*
 [^3]: *java.awt.event.ActionListener*
@@ -112,7 +110,6 @@ In jEdit's case, the object structure is composed of the following classes: *Vie
 * *TextArea* does not seem to have any behaviour added through the visitors for the moment
 * *EditPanes* as several behaviours added through *SaveCaretInfoVisitor* and other anonymous classes implementing *JEditVisitor* (e.g. in *BufferSetManager*, *CompleteWorld* and *Buffer*).
 
-[^6]: *org.gjt.sp.jedit.textarea* package
 [^7]: *org.gjt.sp.jedit.visitors* package
 
 ![Visitor Class Diagram](images/visitor.png)\
@@ -157,3 +154,5 @@ The following notes must not be included in the report, there are just some inte
     * "Behavioral: Most of these design patterns are specifically concerned with communication between objects." (wikipedia)
 
 * [UML Class Diagram: Association, Aggregation and Composition](http://aviadezra.blogspot.be/2009/05/uml-association-aggregation-composition.html)
+
+* Abstract Factory http://sourcemaking.com/design_patterns/abstract_factory
