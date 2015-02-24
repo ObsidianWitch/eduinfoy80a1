@@ -123,13 +123,13 @@ In jEdit's case, the object structure is composed of the following classes: *Vie
 As for the differences with the original pattern, the elements from the object structure being visited do not implement a common interface.
 
 # Exercise 2: Recognize Design Patterns
-<!-- TODO -->
+First of all, please find below a simplified class diagram to visualize more easily how the different classes interact.
 
-<!-- guesses
- * memento
- * command ?
- * composite ?
--->
+![Exercise 2 Class Diagram](images/ex2.png)\
+
+The inner classes *Edit*, *Insert*, *Remove*, *Replace*, *CompressedReplace*, *CompoundEdit* are part of an implementation of the Command design pattern which is a behavioral pattern. *Edit* is an abstract class that all commands inherits. Each command must implement an *undo()* and a *redo()* action. By using this pattern, each operation applied to a buffer (e.g. inserting text, removing text) is instantiated as a class implementing the *Edit* interface so that they can be easily saved in queues in order to *undo()* or *redo()* them. Without this pattern, undo and redo could be implemented by saving the content of the buffer after each operation, but that would be more expensive memory-wise.
+
+The *Edit* abstract class and its children are part of a composite design pattern, which is a structural pattern. In this implementation, there are no leafs, only composite elments (*Edit* and its children). This pattern is used here in order to retrieve the previous and next *Edit*, which is useful for implementing the redo and undo queues.
 
 # Exercise 3: Coupling & Cohesion
 <!-- TODO -->
