@@ -55,15 +55,13 @@ The following classes are also implementing a singleton pattern, but we won't de
 * *DockableWindowFactory* (*org.gjt.sp.jedit.gui*)
 
 ## Abstract Factory
-The abstract factory pattern is a creationnal pattern which helps creating factories which are related (by a theme or which are dependant) and the associated objets.
+The abstract factory pattern is a creationnal pattern which helps creating related objects.
 
-The example found in jEdit's code is centered around the *ServiceManager* class. Services are specified in files named *services.xml*. This file specifies the services' class or factory class, name and way of instantiating it (constructor to call). Each service is a singleton handled by the *ServiceManager*. By loading services through an XML file, the program handles the instantiation of services the same way for all services. Moreover, the program's code does not need to be modified to add a service, only the xml must be modified; hence, the *ServiceManager* does not need to depend on all the services' factories and the coupling is reduced.
+The example found in jEdit's code is centered around the *StatusWidgetFactory* interface which must be implemented by all the factories related to constructing statusbar widgets. Examples of factories implementing it are *ErrorsWidgetFactory*, *ClockWidgetFactory*, *LastModifiedWidgetFactory*. It's purpose is to instantiate StatusBar widgets without having to specify the concrete class needed to construct it.
 
 ![Abstract Factory Class Diagram](images/abstractfactory.png)\
 
-* deviation from original pattern: no abstract class from which the ServiceManager inherits, only ServiceManager is used
-<!-- TODO see in more details how ServiceManager works -->
-<!-- TODO see all the factories in gui/statusbar -->
+**N.B.** Statusbar widgets also seem to be used as services and are listed in the *services.xml* file. This file specifies the services' classes or factory classes, namees and way of instantiating them (constructor to call). Each service is a singleton handled by the *ServiceManager*. By loading services through an XML file, the program handles the instantiation of services the same way for all services. Moreover, the program's code does not need to be modified to add a service, only the xml must be modified; hence, the *ServiceManager* does not need to depend on all the services' factories and the coupling is reduced.
 
 ## Observer
 The Observer is a behavioral pattern, it is justified by the fact that subjects communicate with observers to which they are registered.
