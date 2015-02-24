@@ -5,7 +5,6 @@
 
 In this exercise, we had to find instances of design patterns in Jedit's code, Jedit being an open source text editor written in Java.
 
-<!-- TODO say and justify the category (creational, structural, behavioral) -->
 <!-- TODO describe the participants (class & method names) -->
 <!-- TODO class diagram (only include the necessary elements)-->
 <!-- TODO motivation & application of the pattern in this context (don't give a general description of the pattern) -->
@@ -139,10 +138,20 @@ The *Edit* abstract class and its children are part of a composite design patter
 **Coupling** refers to the dependencies between classes. Highly coupled classes cannot be used independently, consequently changes to those classes are difficult to make without having to modify all the dependent classes. It's also hard to reuse classes with high coupling because all the dependencies must be carried with them. So, we should try to have **low coupling** between the modules in our programms.
 
 ## Cohesion in jEdit
-<!-- TODO -->
+*MiscUtilities* has a coincidental type of cohesion, which corresponds to low cohesion. As the class' name implies, it contains miscellaneous tools: the developpers did not know where to put them, so they put them all in one big class with no relation between the members. Some possible improvements below.
+
+* A first simple step to improve the situation would be to group together all related methods (e.g. paths, backup) to achieve logical cohesion.
+* One other improvement would be to move methods which are used only once where they are called (e.g. *canonPath()* is used only in *FileVFS*'s '*_canonPath()* method).
+* One could also see paths as potential objects, instead of directly manipulating *Strings*. Then, a *Path* class could be created, and related methods could be moved into it (and they would not be static anymore).
+* This is more related to code smell than cohesion, but it seems that some methods (e.g. *isAbsolutePath()*) are useless since they already exist in the JDK (*isAbsolute()*).
+
+<!-- TODO
+ * GUIUtilities
+ * io/VFSFile
+-->
 
 ## Coupling in jEdit
-<!-- TODO -->
+<!-- TODO coupling between jEdit & GUIUtilities -->
 
 # References
 <!-- TODO -->
@@ -167,5 +176,3 @@ The following notes must not be included in the report, there are just some inte
     * "Behavioral: Most of these design patterns are specifically concerned with communication between objects." (wikipedia)
 
 * [UML Class Diagram: Association, Aggregation and Composition](http://aviadezra.blogspot.be/2009/05/uml-association-aggregation-composition.html)
-
-* Abstract Factory http://sourcemaking.com/design_patterns/abstract_factory
