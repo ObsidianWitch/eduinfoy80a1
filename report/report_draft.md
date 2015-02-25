@@ -138,6 +138,8 @@ The *Edit* abstract class and its children are part of a composite design patter
 **Coupling** refers to the dependencies between classes. Highly coupled classes cannot be used independently, consequently, changes to those classes are difficult to make without having to modify all the dependent classes. It's also hard to reuse and test classes with high coupling because all the dependencies must be carried with them. So, we should try to have **low coupling** between the modules in our programms.
 
 ## Cohesion in jEdit
+
+### MiscUtilities
 *MiscUtilities* has a coincidental type of cohesion, which corresponds to low cohesion. As the class' name implies, it contains miscellaneous tools: the developpers did not know where to put them, so they put them all in one big class with no relation between the members. Some possible improvements below.
 
 * A first simple step to improve the situation would be to group together all related methods (e.g. paths, backup) to achieve logical cohesion.
@@ -145,24 +147,36 @@ The *Edit* abstract class and its children are part of a composite design patter
 * One could also see paths as potential objects, instead of directly manipulating *Strings*. Then, a *Path* class could be created, and related methods could be moved into it (and they would not be static anymore).
 * This is more related to code smell than cohesion, but it seems that some methods (e.g. *isAbsolutePath()*) are useless since they already exist in the JDK (*isAbsolute()*).
 
+### GUIUtilities
 *GUIUtilities* has a logical type of cohesion, which is in the lower part of the cohesion spectrum. This class contains methods related to GUI handling (e.g. loading an icon, creating a menu item, creating a toolbar). Here are some improvements which could be made :
 
-* As stated previously, some methods should not be placed here, but with their related class based on criteria such as needed parameters, or return types. For example, *loadMenuItem()* returns a *JMenuItem* and could be placed in this class.
+* As stated previously, methods should not be placed here, but with their related class based on criteria such as needed parameters, or return types. For example, *loadMenuItem()* returns a *JMenuItem* and could be placed in this class.
 * It seems strange to have *SplashScreen* methods globally accessible and placed in *GUIUtilities*, since the splashscreen should be shown only once in the application's lifecycle. Moreover, these methods could have been moved into jEdit's *SplashScreen* class. The *SplashScreen* should have been instantiated in the only part of the application which needs it: *jEdit*'s *main()* method. Finally, why is there a jEdit *SplashScreen* class when there is already a way of doing it in Swing? It can even be handled by using the *SplashScreen-Image* option in the JAR manifest file.
 <!-- ref: http://docs.oracle.com/javase/tutorial/uiswing/misc/splashscreen.html -->
 
-**N.B.** On a side note, tools like SWIXML or JavaFX could be used to generate the UI by parsing XML files. The main advantage would be to separate the UI from the program's logic.
+**N.B.** On a side note, since we are talking about UI, tools like SWIXML or JavaFX could be used to generate the UI by parsing XML files. The main advantage would be to separate the UI from the program's logic.
 
+### VFSFile
 <!-- TODO
- * io/VFSFile
+ * type + reason ?
+    * procedural
+    * communicational
+    * sequential
+    * functional
 -->
 
 ## Coupling in jEdit
-<!-- TODO  coupling between jEdit & GUIUtilities
- * GUIUtilities depends on jEdit (getProperty(), getBooleanProperty(), setIntegerProperty(), )
- * jEdit depends on GUIUtilities (showSplashScreen(), advanceSplashProgress(), init(), confirm(), requestFocus(), error(), getView())
- * cyclic dependency?
--->
+The *jEdit* and *GUIUtilities* classes seem to be highly coupled, since they cannot be used independently :
+* *jEdit* relies on static methods from *GUIUtilities* (e.g. *showSplashScreen()*, *advanceSplashProgress()*)
+* *GUIUtilities* relies on static methods from *jEdit* (e.g. *getProperty()*, *setProperty()*)
+
+These two classes share global data through static methods, it implies that this is a case of common coupling. Using static methods can lead to problematic situations. First of all, dependencies between classes when using static methods, since they do not appear as a class' attribute and are not part of a method's parameters (they are not visible in the class' interface). <!-- ref: http://tutorials.jenkov.com/ood/understanding-dependencies.html-->
+Static methods can also be accessed from anywhere, it is probably safe if they are only used to access data and not modify it, but that does not seem to be the case here (e.g. *jEdit.setProperty()*). Being able to modify data from anywhere in the application makes testing difficult: if a class need to access a specific static data, and this data can be anything at any point in the application, then it is impossible to test efficiently this class because the state of the application is undefined. <!-- TODO reword it -->
+
+Below are some ideas to reduce coupling between these 2 classes :
+* get rid of *GUIUtilities*, and use some other way of handling UI (previously talked about UI generated from XML files);
+* a more simple improvement would be to move the splashscreen instantiation to *jEdit*'s main method, since it is the only place in the application that a splashscreen should be called. All the methods related to the splashscreen in *GUIUtilities* should be moved to the intended class (*SplashScreen*).
+* properties being globally accessible could be useful, but there should be restrictions on who can modify them
 
 # References
 <!-- TODO -->
