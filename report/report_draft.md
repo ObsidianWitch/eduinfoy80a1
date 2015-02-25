@@ -135,7 +135,7 @@ The *Edit* abstract class and its children are part of a composite design patter
 
 **Cohesion** refers to how related attributes and methods are within a class and if they are responding to the class' intention. **High cohesion**, which is preferable, means that a class does one specific job well. Low cohesion, which should be avoided, means that the class is not focused on one thing and could be refactored. For example, an *User* class containing attributes such as the name or the email address and methods for sending messages to other users has a low cohesion, since message handling could be refactored and done by other classes.
 
-**Coupling** refers to the dependencies between classes. Highly coupled classes cannot be used independently, consequently changes to those classes are difficult to make without having to modify all the dependent classes. It's also hard to reuse classes with high coupling because all the dependencies must be carried with them. So, we should try to have **low coupling** between the modules in our programms.
+**Coupling** refers to the dependencies between classes. Highly coupled classes cannot be used independently, consequently, changes to those classes are difficult to make without having to modify all the dependent classes. It's also hard to reuse and test classes with high coupling because all the dependencies must be carried with them. So, we should try to have **low coupling** between the modules in our programms.
 
 ## Cohesion in jEdit
 *MiscUtilities* has a coincidental type of cohesion, which corresponds to low cohesion. As the class' name implies, it contains miscellaneous tools: the developpers did not know where to put them, so they put them all in one big class with no relation between the members. Some possible improvements below.
@@ -145,13 +145,24 @@ The *Edit* abstract class and its children are part of a composite design patter
 * One could also see paths as potential objects, instead of directly manipulating *Strings*. Then, a *Path* class could be created, and related methods could be moved into it (and they would not be static anymore).
 * This is more related to code smell than cohesion, but it seems that some methods (e.g. *isAbsolutePath()*) are useless since they already exist in the JDK (*isAbsolute()*).
 
+*GUIUtilities* has a logical type of cohesion, which is in the lower part of the cohesion spectrum. This class contains methods related to GUI handling (e.g. loading an icon, creating a menu item, creating a toolbar). Here are some improvements which could be made :
+
+* As stated previously, some methods should not be placed here, but with their related class based on criteria such as needed parameters, or return types. For example, *loadMenuItem()* returns a *JMenuItem* and could be placed in this class.
+* It seems strange to have *SplashScreen* methods globally accessible and placed in *GUIUtilities*, since the splashscreen should be shown only once in the application's lifecycle. Moreover, these methods could have been moved into jEdit's *SplashScreen* class. The *SplashScreen* should have been instantiated in the only part of the application which needs it: *jEdit*'s *main()* method. Finally, why is there a jEdit *SplashScreen* class when there is already a way of doing it in Swing? It can even be handled by using the *SplashScreen-Image* option in the JAR manifest file.
+<!-- ref: http://docs.oracle.com/javase/tutorial/uiswing/misc/splashscreen.html -->
+
+**N.B.** On a side note, tools like SWIXML or JavaFX could be used to generate the UI by parsing XML files. The main advantage would be to separate the UI from the program's logic.
+
 <!-- TODO
- * GUIUtilities
  * io/VFSFile
 -->
 
 ## Coupling in jEdit
-<!-- TODO coupling between jEdit & GUIUtilities -->
+<!-- TODO  coupling between jEdit & GUIUtilities
+ * GUIUtilities depends on jEdit (getProperty(), getBooleanProperty(), setIntegerProperty(), )
+ * jEdit depends on GUIUtilities (showSplashScreen(), advanceSplashProgress(), init(), confirm(), requestFocus(), error(), getView())
+ * cyclic dependency?
+-->
 
 # References
 <!-- TODO -->
