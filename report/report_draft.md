@@ -157,13 +157,9 @@ The *Edit* abstract class and its children are part of a composite design patter
 **N.B.** On a side note, since we are talking about UI, tools like SWIXML or JavaFX could be used to generate the UI by parsing XML files. The main advantage would be to separate the UI from the program's logic.
 
 ### VFSFile
-<!-- TODO
- * type + reason ?
-    * procedural
-    * communicational
-    * sequential
-    * functional
--->
+All attributes from *VFSFile* are primitive data types or part of the JDK (*String*) and are related to a file properties (e.g. name, path, length). this class' methods also seem to be all related to handling files. So, this class is an example of functional cohesion (high cohesion).
+
+While the cohesion seem to be high does not mean than no improvements can be made. For example, the file's colour is handled by a *getColour* method which retrieve a colour based on the VFS. Colour is more related to the UI than file handling, and could be computed elsewhere. By computing the colour in *VFSFile*, it ties this class to one possible representation of the UI. On the other hand, this is not harmful in this case, since the class could be reused elsewhere and the code related to colour deleted without too much effort, if not used. Furthermore, the current solution is simple to use, and separating colour from *VFSFile* could cause unnecessary efforts for no real benefit.
 
 ## Coupling in jEdit
 The *jEdit* and *GUIUtilities* classes seem to be highly coupled, since they cannot be used independently :
