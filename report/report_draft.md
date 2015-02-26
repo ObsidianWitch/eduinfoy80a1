@@ -54,7 +54,7 @@ The following classes are also implementing a singleton pattern, but we won't de
 * *DockableWindowFactory* (*org.gjt.sp.jedit.gui*)
 
 ## Abstract Factory
-The abstract factory pattern is a creationnal pattern which helps creating related objects.
+The abstract factory pattern is a creational pattern which helps creating related objects.
 
 The example found in jEdit's code is centered around the *StatusWidgetFactory* interface which must be implemented by all the factories related to constructing statusbar widgets. Examples of factories implementing it are *ErrorsWidgetFactory*, *ClockWidgetFactory*, *LastModifiedWidgetFactory*. It's purpose is to instantiate StatusBar widgets without having to specify the concrete class needed to construct it.
 

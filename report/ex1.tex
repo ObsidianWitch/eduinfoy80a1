@@ -30,7 +30,7 @@ case so that only one plugin manager window can be instantiated and
 displayed at once when invoking it via the menu (\emph{Plugins -> Plugin
 Manager...}). The following methods are involved :
 
-\begin{itemize}
+\begin{itemize}\itemsep1pt
     \item the \emph{showPluginManager()} method instantiate a PluginManager if
     it has not already been instantiated, else it brings the plugin manager
     window to the front;
@@ -46,18 +46,50 @@ Manager...}). The following methods are involved :
     \caption{Singleton example class diagram}
 \end{figure}
 
-The following classes are also implementing a singleton pattern, but they will
-not be described in details.
+\begin{framehint}
+    The following classes are also implementing a singleton pattern, but they
+    will not be described in details.
 
-\begin{itemize}
-    \item \emph{ReflectManager} (\emph{org.gjt.sp.jedit.bsh})
-    \item \emph{KillRing} (\emph{org.gjt.sp.jedit.buffer})
-    \item \emph{ModeProvider} (\emph{org.gjt.sp.jedit.syntax})
-    \item \emph{TransferHandler} (\emph{org.gjt.sp.jedit.datatransfer})
-    \item \emph{DockableWindowFactory} (\emph{org.gjt.sp.jedit.gui})
-\end{itemize}
+    \begin{itemize}\itemsep1pt
+        \item \emph{ReflectManager} (\emph{org.gjt.sp.jedit.bsh})
+        \item \emph{KillRing} (\emph{org.gjt.sp.jedit.buffer})
+        \item \emph{ModeProvider} (\emph{org.gjt.sp.jedit.syntax})
+        \item \emph{TransferHandler} (\emph{org.gjt.sp.jedit.datatransfer})
+        \item \emph{DockableWindowFactory} (\emph{org.gjt.sp.jedit.gui})
+    \end{itemize}
+\end{framehint}
+\newpage
 
 \subsection{Abstract Factory}
+
+\noindent The abstract factory pattern is a creational pattern which helps creating
+related objects.\\
+
+The example found in jEdit's code is centered around the
+\emph{StatusWidgetFactory} interface which must be implemented by all the
+factories related to constructing statusbar widgets. Examples of factories
+implementing it are \emph{ErrorsWidgetFactory}, \emph{ClockWidgetFactory},
+\emph{LastModifiedWidgetFactory}. Its purpose is to instantiate StatusBar
+widgets without having to specify the concrete class needed to construct it.
+
+\begin{figure}[h!]
+    \includegraphics[width=0.8\textwidth]{images/abstractfactory.png}
+    \centering
+    \caption{Abstract Factory example class diagram}
+\end{figure}
+
+\begin{framehint2}
+\textbf{N.B.} Statusbar widgets also seem to be used as services and are listed
+in the \emph{services.xml} file. This file specifies the services' classes or
+factory classes, names and ways of instantiating them (constructor to call).
+Each service is a singleton handled by the \emph{ServiceManager}.
+By loading services through an XML file, the program handles the
+instantiation of services the same way for all services. Furthermore, the
+program's code does not need to be modified to add a service, only the
+xml must be modified; hence, the \emph{ServiceManager} does not need to
+depend on all the services' factories and the coupling is reduced.
+\end{framehint2}
+\newpage
 
 \subsection{Observer}
 
