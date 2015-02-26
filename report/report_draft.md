@@ -141,7 +141,7 @@ The *Edit* abstract class and its children are part of a composite design patter
 *MiscUtilities* has a coincidental type of cohesion, which corresponds to low cohesion. As the class' name implies, it contains miscellaneous tools: the developpers did not know where to put them, so they put them all in one big class with no relation between the members. Some possible improvements below.
 
 * A first simple step to improve the situation would be to group together all related methods (e.g. paths, backup) to achieve logical cohesion.
-* One other improvement would be to move methods which are used only once where they are called (e.g. *canonPath()* is used only in *FileVFS*'s '*_canonPath()* method).
+* One other improvement would be to move methods which are used only once where they are called (e.g. *canonPath()* is used only in *FileVFS*'s *_canonPath()* method).
 * One could also see paths as potential objects, instead of directly manipulating *Strings*. Then, a *Path* class could be created, and related methods could be moved into it (and they would not be static anymore).
 * This is more related to code smell than cohesion, but it seems that some methods (e.g. *isAbsolutePath()*) are useless since they already exist in the JDK (*isAbsolute()*).
 

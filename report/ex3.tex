@@ -24,9 +24,82 @@ programms.
 
 \subsubsection{MiscUtilities}
 
+\emph{MiscUtilities} has a coincidental type of cohesion, which
+corresponds to low cohesion. As the class' name implies, it contains
+miscellaneous tools: the developpers did not know where to put them, so
+they put them all in one big class with no relation between the members.
+Some possible improvements below.
+
+\begin{itemize}\itemsep1pt
+    \item A first simple step to improve the situation would be to group
+    together all related methods (e.g. paths, backup) to achieve logical
+    cohesion.
+
+    \item One other improvement would be to move methods which are used only
+    once where they are called (e.g. \emph{canonPath()} is used only in
+    \emph{FileVFS}`s \emph{canonPath()} method).
+
+    \item One could also see paths as potential objects, instead of directly
+    manipulating \emph{Strings}. Then, a \emph{Path} class could be
+    created, and related methods could be moved into it (and they would
+    not be static anymore).
+
+    \item This is more related to code smell than cohesion, but it seems that
+    some methods (e.g. \emph{isAbsolutePath()}) are useless since they
+    already exist in the JDK (\emph{isAbsolute()}).
+\end{itemize}
+
 \subsubsection{GUIUtilities}
 
+\emph{GUIUtilities} has a logical type of cohesion, which is in the
+lower part of the cohesion spectrum. This class contains methods related
+to GUI handling (e.g. loading an icon, creating a menu item, creating a
+toolbar). Here are some improvements which could be made :
+
+\begin{itemize}\itemsep1pt
+    \item As stated previously, methods should not be placed here, but with
+    their related class based on criteria such as needed parameters, or return
+    types. For example, \emph{loadMenuItem()} returns a \emph{JMenuItem} and
+    could be placed in this class.
+
+    \item It seems strange to have \emph{SplashScreen} methods globally
+    accessible and placed in \emph{GUIUtilities}, since the splashscreen
+    should be shown only once in the application's lifecycle. Moreover,
+    these methods could have been moved into jEdit's \emph{SplashScreen}
+    class. The \emph{SplashScreen} should have been instantiated in the
+    only part of the application which needs it: \emph{jEdit}'s
+    \emph{main()} method. Finally, why is there a jEdit
+    \emph{SplashScreen} class when there is already a way of doing it in
+    Swing? It can even be handled by using the \emph{SplashScreen-Image}
+    option in the JAR's manifest file.
+\end{itemize}
+
+\begin{framehint2}
+    \textbf{N.B.} On a side note, since we are talking about UI, tools like
+    SWIXML or JavaFX could be used to generate the UI by parsing XML files.
+    The main advantage would be to separate the UI from the program's logic.
+\end{framehint2}
+
 \subsubsection{VFSFile}
+
+All attributes from \emph{VFSFile} are primitive data types or part of
+the JDK (\emph{String}) and are related to a file properties (e.g. name, path,
+length). this class' methods also seem to be all related to handling files.
+So, this class is an example of functional cohesion (high cohesion).
+
+\begin{framewarning}
+    While the cohesion seem to be high does not mean than no improvements can
+    be made.
+    For example, the file's colour is handled by a \emph{getColour} method which
+    retrieve a colour based on the VFS. Colour is more related to the UI than
+    file handling, and could be computed elsewhere.
+    By computing the colour in \emph{VFSFile}, it ties this class to one
+    possible representation of the UI. On the other hand, this is not harmful in
+    this case, since the class could be reused elsewhere and the code related to
+    colour deleted without too much effort, if not used. Furthermore, the
+    current solution is simple to use, and separating colour from
+    \emph{VFSFile} could cause unnecessary efforts for no real benefit.
+\end{framewarning}
 
 \subsection{Coupling in jEdit}
 
