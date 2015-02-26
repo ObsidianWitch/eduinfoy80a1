@@ -1,5 +1,5 @@
 % Software Architectures - Assignement 1: Design patterns
-% Abdeslam Bakkali Taheri; Vincent Lindivat
+% Vincent Lindivat
 
 # Exercise 1: Find instances of Design Patterns
 
@@ -83,23 +83,21 @@ The following classes are also implementing an observer pattern but were not cho
     * http://www.oodesign.com/visitor-pattern.html
     * https://en.wikipedia.org/wiki/Visitor_pattern
     * http://sourcemaking.com/design_patterns/visitor
+    * https://stackoverflow.com/questions/350404/how-do-the-proxy-decorator-adapter-and-bridge-patterns-differ
 -->
 
-The adapter pattern is a structural pattern used to pass an instance of a class having an interface to a client expecting another interface through a wrapper.
+The adapter pattern is a structural pattern used to convert an interface into another interface which a client expects.
 
-Here we have the *BufferAdapter*[^5] class which implements the *BufferListener*[^5] interface. This class contains all the *BufferListener*'s methods with empty bodies. Then, one class can inherit from *BufferAdapter* in order to avoid having to implement all *BufferListener*'s methods (e.g. *ElasticTabStopBufferListener*[^6], or the anonymous class in the *Gutter*[^6] class' constructor). As stated in *BufferListener*'s documentation, this interface may change in the future. By using *BufferAdapter* instead of *BufferListener* as the expected interface, developpers will only have to modify *BufferAdapter* if *BufferListener* is modified.
+One example of an adapter used in jEdit's code is *EditAction*'s inner class *Wrapper*. It adapts an *ActionContext* object to the *ActionListener* interface (awt). The purpose of this adapter is to perform an *EditAction* with the help of the *ActionContext* instance when an action event is received as part of awt's *ActionListener*.
 
-[^5]: *org.gjt.sp.jedit.buffer* package
-[^6]: *org.gjt.sp.jedit.textarea* package
+![Adapter Class Diagram](images/adapter.png)\ <!-- TODO modify -->
 
-<!-- TODO this implementation corresponds to the Class Adapter described on the wikipedia page but differs from the one described in the *Head First Design Patterns* book -> find more information -->
+Other examples of the adapter pattern where found in jEdit's code :
 
-![Adapter Class Diagram](images/adapter.png)\
+* *TextArea.CharIterator* which is the adapter class which adapts the *CharSequence* (*java.lang*) interface to the *CharacterIterator* (*java.text*) interface;
+* *PositionManager.PosTopHalf* which adapts *PositionManager.PosBottomHalf*'s interface to the *Position* interface.
 
-Other Adapter patterns were found in jedit's code which have the same purpose as described above :
-
-* *BufferSetAdapter* implementing *BufferSetListener* (*org.gjt.sp.jedit.bufferset*)
-* *JEditVisitorAdapter* implementing *JEditVisitor* (*org.gjt.sp.jedit.visitors*)
+**N.B.** jEdit possesses classes with "Adapter" in their class name. They currently have the same meaning as the Adapters used in *awt* (e.g. *ComponentAdapter*, *WindowAdapter*). These adapters are used as a convenience for creating listener objects, and the methods are empty. <!-- ref: http://docs.oracle.com/javase/7/docs/api/java/awt/event/WindowAdapter.html --> Some examples of such classes in jEdit are *BufferAdapter*, *BufferSetAdapter*, *JEditVisitorAdapter*. They also have another purpose: as stated in *bufferListener*'s documentation, this interface may change in the future and thus *BufferAdapter* should be subclassed instead. By using *BufferAdapter* instead of *BufferListener*, developpers will only have to modify *BufferAdapter* if *BufferListener* is modified.
 
 ## Visitor
 The visitor design pattern is a behavioral pattern, its purpose being to separate algorithms from an object structure (e.g. composite).
