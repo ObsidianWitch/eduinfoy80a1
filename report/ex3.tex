@@ -2,6 +2,24 @@
 
 \subsection{Levels of coupling and cohesion}
 
+\textbf{Cohesion} refers to how related attributes and methods are
+within a class and if they are responding to the class' intention.
+\textbf{High cohesion}, which is preferable, means that a class does one
+specific job well. Low cohesion, which should be avoided, means that the
+class is not focused on one thing and could be refactored. For example,
+an \emph{User} class containing attributes such as the name or the email
+address and methods for sending messages to other users has a low
+cohesion, since message handling could be refactored and done by other
+classes.\\
+
+\textbf{Coupling} refers to the dependencies between classes. Highly
+coupled classes cannot be used independently, consequently, changes to
+those classes are difficult to make without having to modify all the
+dependent classes. It's also hard to reuse and test classes with high
+coupling because all the dependencies must be carried with them. So, we
+should try to have \textbf{low coupling} between the modules in our
+programms.
+
 \subsection{Cohesion in jEdit}
 
 \subsubsection{MiscUtilities}
