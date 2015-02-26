@@ -4,6 +4,7 @@ In this exercise, we had to find instances of design patterns in jEdit's
 code, jEdit being an open source text editor written in Java.
 
 \subsection{Singleton}
+% TODO see related links in draft and add them in reference if necessary
 
 The singleton pattern is categorized as a creational pattern because it
 ensures that a specific class is \textbf{instantiated} only once.\\
@@ -12,7 +13,7 @@ It is often criticized because an instance of a class using this pattern
 can be used like a global variable. A global variable causes problem for
 unit testing, because it can be modified by everyone and causes
 unpredictability in the state of the system. It also introduces coupling
-with classes using it, which renders them hardly reusable.\\
+with classes using it, which renders them hardly reusable.\\ % TODO ref
 
 While using global variables may be seen as bad practice, and while
 there are alternatives (e.g. dependency injection), these alternatives
@@ -20,7 +21,7 @@ may bring drawbacks such as having the code difficult to read, or the
 intent of the developpers may not be easy to grasp at first glance.
 Global variables may even be the simplest way of using tools such as a
 Logging classes which is not directly part of the application but only
-here to help debugging.\\
+here to help debugging.\\ % TODO ref
 
 The example we chose for a singleton implementation is the
 \emph{PluginManager}\footnote{\emph{org.gjt.sp.jedit.pluginmgr} package}
@@ -137,6 +138,7 @@ that he has finished counting to its listeners (\emph{Autosave}).
 \newpage
 
 \subsection{Adapter}
+% TODO see related links in draft and add them in reference if necessary
 
 The adapter pattern is a structural pattern used to convert an interface into
 another interface which a client expects.\\

@@ -90,7 +90,7 @@ The adapter pattern is a structural pattern used to convert an interface into an
 
 One example of an adapter used in jEdit's code is *EditAction*'s inner class *Wrapper*. It adapts an *ActionContext* object to the *ActionListener* interface (awt). The purpose of this adapter is to perform an *EditAction* with the help of the *ActionContext* instance when an action event is received as part of awt's *ActionListener*.
 
-![Adapter Class Diagram](images/adapter.png)\ <!-- TODO modify -->
+![Adapter Class Diagram](images/adapter.png)\
 
 Other examples of the adapter pattern where found in jEdit's code :
 
@@ -161,6 +161,7 @@ While the cohesion seem to be high does not mean than no improvements can be mad
 
 ## Coupling in jEdit
 The *jEdit* and *GUIUtilities* classes seem to be highly coupled, since they cannot be used independently :
+
 * *jEdit* relies on static methods from *GUIUtilities* (e.g. *showSplashScreen()*, *advanceSplashProgress()*)
 * *GUIUtilities* relies on static methods from *jEdit* (e.g. *getProperty()*, *setProperty()*)
 
