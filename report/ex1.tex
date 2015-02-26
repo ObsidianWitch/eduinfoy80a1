@@ -138,6 +138,53 @@ that he has finished counting to its listeners (\emph{Autosave}).
 
 \subsection{Adapter}
 
+The adapter pattern is a structural pattern used to convert an interface into
+another interface which a client expects.\\
+
+One example of an adapter used in jEdit's code is \emph{EditAction}'s
+inner class \emph{Wrapper}. It adapts an \emph{ActionContext} object to
+the \emph{ActionListener} interface (awt). The purpose of this adapter
+is to perform an \emph{EditAction} with the help of the
+\emph{ActionContext} instance when an action event is received as part
+of awt's \emph{ActionListener}.
+
+\begin{figure}[h!]
+    \includegraphics[width=0.7\textwidth]{images/adapter.png}
+    \centering
+    \caption{Adapter example class diagram}
+\end{figure}
+
+\begin{framehint}
+    Other examples of the adapter pattern where found in jEdit's code :
+
+    \begin{itemize}\itemsep1pt
+        \item \emph{TextArea.CharIterator} which is the adapter class which
+        adapts the \emph{CharSequence} (\emph{java.lang}) interface to the
+        \emph{CharacterIterator} (\emph{java.text}) interface;
+
+        \item \emph{PositionManager.PosTopHalf} which adapts
+        \emph{PositionManager.PosBottomHalf}'s interface to the \emph{Position}
+        interface.
+    \end{itemize}
+\end{framehint}
+
+\begin{framehint2}
+    \textbf{N.B.} jEdit possesses classes with ``Adapter'' in their class name.
+    They currently have the same meaning as the Adapters used in \emph{awt}
+    (e.g. \emph{ComponentAdapter}, \emph{WindowAdapter}).
+    These adapters are used as a convenience for creating listener objects, and
+    their methods are empty.
+    Some examples of such classes in jEdit are \emph{BufferAdapter},
+    \emph{BufferSetAdapter}, \emph{JEditVisitorAdapter}.
+    They also have another purpose: as stated in \emph{bufferListener}'s
+    documentation, this interface may change in the future and thus
+    \emph{BufferAdapter} should be subclassed instead.
+    By using \emph{BufferAdapter} instead of \emph{BufferListener}, developpers
+    will only have to modify \emph{BufferAdapter} if \emph{BufferListener} is
+    modified.
+\end{framehint2}
+\newpage
+
 \subsection{Visitor}
 
 \newpage
