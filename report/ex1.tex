@@ -79,19 +79,62 @@ widgets without having to specify the concrete class needed to construct it.
 \end{figure}
 
 \begin{framehint2}
-\textbf{N.B.} Statusbar widgets also seem to be used as services and are listed
-in the \emph{services.xml} file. This file specifies the services' classes or
-factory classes, names and ways of instantiating them (constructor to call).
-Each service is a singleton handled by the \emph{ServiceManager}.
-By loading services through an XML file, the program handles the
-instantiation of services the same way for all services. Furthermore, the
-program's code does not need to be modified to add a service, only the
-xml must be modified; hence, the \emph{ServiceManager} does not need to
-depend on all the services' factories and the coupling is reduced.
+    \textbf{N.B.} Statusbar widgets also seem to be used as services and are
+    listed in the \emph{services.xml} file. This file specifies the services'
+    classes or factory classes, names and ways of instantiating them
+    (constructor to call).
+    Each service is a singleton handled by the \emph{ServiceManager}.
+    By loading services through an XML file, the program handles the
+    instantiation of services the same way for all services. Furthermore, the
+    program's code does not need to be modified to add a service, only the
+    xml must be modified; hence, the \emph{ServiceManager} does not need to
+    depend on all the services' factories and the coupling is reduced.
 \end{framehint2}
 \newpage
 
 \subsection{Observer}
+
+The Observer is a behavioral pattern, it is justified by the fact that
+subjects communicate with observers to which they are registered.\\
+
+The example we chose for this pattern is composed of the
+\emph{Autosave}\footnote{\emph{org.gjt.sp.jedit.Autosave}},
+\emph{ActionListener}\footnote{\emph{java.awt.event.ActionListener}} \&
+\emph{Timer}\footnote{\emph{javax.swing.Timer}} classes. The
+\emph{Autosave} class' purpose is to automatically save all buffers with
+unsaved changes after a certain amount of time has elapsed (default
+value is 30 secondes). This class implements the \emph{ActionListener}
+(awt) interface which contains the \emph{actionPerformed()} method. This
+method is called by a subject, here the subject being a \emph{Timer}
+(swing) which calls \emph{actionPerformed()} after the specified amount
+of time has elapsed. Finally, \emph{actionPerformed()} calls the
+\emph{autosave()} method on all the buffers (the buffers are globally
+accessible from \emph{jEdit}'s \emph{getBuffer()} static method). The
+Observer pattern is a way of avoid busy-waiting, instead of checking
+repeatedly whether the time has elapsed, it lets the \emph{Timer} notify
+that he has finished counting to its listeners (\emph{Autosave}).
+
+\begin{figure}[h!]
+    \includegraphics[width=0.8\textwidth]{images/observer.png}
+    \centering
+    \caption{Observer example class diagram}
+\end{figure}
+
+\begin{framehint}
+    The following classes are also implementing an observer pattern but were
+    not chosen as our example.
+
+    \begin{itemize}\itemsep1pt
+        \item \emph{RegistersListener} as the observer interface,
+        \emph{JEditRegistersListener} as the concrete observer, and
+        \emph{Registers} as the subject
+
+        \item \emph{HelpHistoryModelListener} as the observer interface,
+          \emph{HelpViewer} as the concrete observer and \emph{HelpHistoryModel}
+          as the subhect (\emph{org.gjt.sp.jedit.help})
+    \end{itemize}
+\end{framehint}
+\newpage
 
 \subsection{Adapter}
 
