@@ -187,4 +187,32 @@ of awt's \emph{ActionListener}.
 
 \subsection{Visitor}
 
+The visitor design pattern is a behavioral pattern, its purpose being to
+separate algorithms from an object structure (e.g. composite).\\
+
+In jEdit's case, the object structure is composed of the following classes:
+\emph{View}, \emph{EditPane} and \emph{TextArea}.
+The visitor interface is called
+\emph{JEditVisitor}\footnote{\emph{org.gjt.sp.jedit.visitors} package} and some
+concrete implementations are \emph{SaveCaretInfoVisitor} and some anonymous
+classes. The purpose of this design pattern here is to have multiple operations
+available for an element without having to modify it. As of jEdit's 5.2 version :
+
+\begin{itemize}\itemsep1pt
+    \item  \emph{View} is only visited to visit its \emph{EditPanes} and the
+    \emph{EditPanes}' \emph{TextAreas}
+    \item \emph{TextArea} does not seem to have any behaviour added through the visitors for the moment
+    \item \emph{EditPanes} as several behaviours added through
+    \emph{SaveCaretInfoVisitor} and other anonymous classes implementing
+    \emph{JEditVisitor} (e.g. in \emph{BufferSetManager}, \emph{CompleteWorld}
+    and \emph{Buffer}).
+\end{itemize}
+
+\begin{figure}[h!]
+    \includegraphics[width=0.8\textwidth]{images/visitor.png}
+    \centering
+    \caption{Visitor example class diagram}
+\end{figure}
+
+As for the differences with the original pattern, the elements from the object structure being visited do not implement a common interface.
 \newpage
