@@ -91,7 +91,7 @@ So, this class is an example of functional cohesion (high cohesion).
 \begin{framewarning}
     While the cohesion seem to be high does not mean than no improvements can
     be made.
-    For example, the file's colour is handled by a \emph{getColour} method which
+    For example, the file's colour is handled by a \emph{getColour()} method which
     retrieve a colour based on the VFS. Colour is more related to the UI than
     file handling, and could be computed elsewhere.
     By computing the colour in \emph{VFSFile}, it ties this class to one

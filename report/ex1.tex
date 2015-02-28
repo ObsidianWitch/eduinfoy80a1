@@ -4,8 +4,6 @@ In this exercise, we had to find instances of design patterns in jEdit's
 code, jEdit being an open source text editor written in Java.
 
 \subsection{Singleton}
-% TODO see related links in draft and add them in reference if necessary
-
 The singleton pattern is categorized as a creational pattern because it
 ensures that a specific class is \textbf{instantiated} only once.\\
 
@@ -21,23 +19,26 @@ may bring drawbacks such as having the code difficult to read, or the
 intent of the developpers may not be easy to grasp at first glance.
 Global variables may even be the simplest way of using tools such as a
 Logging classes which is not directly part of the application but only
-here to help debugging.\\ % TODO ref
+here to help debugging. \cite{cite:plSingletonGlobal} \cite{cite:soSingleton}
+\cite{cite:seGlobal}\\
 
 The example we chose for a singleton implementation is the
-\emph{PluginManager}\footnote{\emph{org.gjt.sp.jedit.pluginmgr} package}
-class. This class handles the window (extends \emph{JFrame}) where
-plugins are installed and updated. The singleton pattern is used in this
+\emph{PluginManager}\footnotemark[1]{} class.
+This class handles the window (extends \emph{JFrame}) where plugins are
+installed and updated. The singleton pattern is used in this
 case so that only one plugin manager window can be instantiated and
 displayed at once when invoking it via the menu (\emph{Plugins -> Plugin
 Manager...}). The following methods are involved :
 
+\footnotetext[1]{\emph{org.gjt.sp.jedit.pluginmgr} package}
+
 \begin{itemize}\itemsep1pt
-    \item the \emph{showPluginManager()} method instantiate a PluginManager if
-    it has not already been instantiated, else it brings the plugin manager
+    \item the \emph{showPluginManager()} method instantiate a \emph{PluginManager}
+    if it has not already been instantiated, else it brings the plugin manager
     window to the front;
 
     \item The \emph{getInstance()} method retrieve the current instance of
-    PluginManager (can be null if it has not yet been instantiated or if
+    \emph{PluginManager} (can be null if it has not yet been instantiated or if
     the instance has been disposed of with the \emph{dispose()} method).
 \end{itemize}
 
@@ -62,7 +63,6 @@ Manager...}). The following methods are involved :
 \newpage
 
 \subsection{Abstract Factory}
-
 \noindent The abstract factory pattern is a creational pattern which helps creating
 related objects.\\
 
@@ -94,15 +94,12 @@ widgets without having to specify the concrete class needed to construct it.
 \newpage
 
 \subsection{Observer}
-
 The Observer is a behavioral pattern, it is justified by the fact that
-subjects communicate with observers to which they are registered.\\
+subjects communicate with observers to which they register.\\
 
 The example we chose for this pattern is composed of the
-\emph{Autosave}\footnote{\emph{org.gjt.sp.jedit.Autosave}},
-\emph{ActionListener}\footnote{\emph{java.awt.event.ActionListener}} \&
-\emph{Timer}\footnote{\emph{javax.swing.Timer}} classes. The
-\emph{Autosave} class' purpose is to automatically save all buffers with
+\emph{Autosave}\footnotemark[1]{}, \emph{ActionListener} \& \emph{Timer} classes.
+The \emph{Autosave} class' purpose is to automatically save all buffers with
 unsaved changes after a certain amount of time has elapsed (default
 value is 30 secondes). This class implements the \emph{ActionListener}
 (awt) interface which contains the \emph{actionPerformed()} method. This
@@ -111,9 +108,11 @@ method is called by a subject, here the subject being a \emph{Timer}
 of time has elapsed. Finally, \emph{actionPerformed()} calls the
 \emph{autosave()} method on all the buffers (the buffers are globally
 accessible from \emph{jEdit}'s \emph{getBuffer()} static method). The
-Observer pattern is a way of avoid busy-waiting, instead of checking
+Observer pattern is a way of avoiding busy-waiting: instead of checking
 repeatedly whether the time has elapsed, it lets the \emph{Timer} notify
 that he has finished counting to its listeners (\emph{Autosave}).
+
+\footnotetext[1]{\emph{org.gjt.sp.jedit.Autosave}}
 
 \begin{figure}[h!]
     \includegraphics[width=0.8\textwidth]{images/observer.png}
@@ -137,9 +136,7 @@ that he has finished counting to its listeners (\emph{Autosave}).
 \end{framehint}
 \newpage
 
-\subsection{Adapter}
-% TODO see related links in draft and add them in reference if necessary
-
+\subsection[Adapter]{Adapter \cite{cite:soAdapterDiff}}
 The adapter pattern is a structural pattern used to convert an interface into
 another interface which a client expects.\\
 
@@ -173,9 +170,10 @@ of awt's \emph{ActionListener}.
 \begin{framehint2}
     \textbf{N.B.} jEdit possesses classes with ``Adapter'' in their class name.
     They currently have the same meaning as the Adapters used in \emph{awt}
-    (e.g. \emph{ComponentAdapter}, \emph{WindowAdapter}).
+    (e.g. \emph{ComponentAdapter}, \emph{WindowAdapter}), and are not
+    implementations of the Adapter design pattern.
     These adapters are used as a convenience for creating listener objects, and
-    their methods are empty.
+    their methods are empty \cite{cite:javaDocWindowAdapter}.
     Some examples of such classes in jEdit are \emph{BufferAdapter},
     \emph{BufferSetAdapter}, \emph{JEditVisitorAdapter}.
     They also have another purpose: as stated in \emph{bufferListener}'s
@@ -188,7 +186,6 @@ of awt's \emph{ActionListener}.
 \newpage
 
 \subsection{Visitor}
-
 The visitor design pattern is a behavioral pattern, its purpose being to
 separate algorithms from an object structure (e.g. composite).\\
 
