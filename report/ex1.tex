@@ -4,19 +4,19 @@ In this exercise, we had to find instances of design patterns in jEdit's
 code, jEdit being an open source text editor written in Java.
 
 \subsection{Singleton}
-The singleton pattern is categorized as a creational pattern because it
+The singleton pattern is categorised as a creational pattern because it
 ensures that a specific class is \textbf{instantiated} only once.\\
 
-It is often criticized because an instance of a class using this pattern
+It is often criticised because an instance of a class using this pattern
 can be used like a global variable. A global variable causes problem for
 unit testing, because it can be modified by everyone and causes
 unpredictability in the state of the system. It also introduces coupling
-with classes using it, which renders them hardly reusable.\\ % TODO ref
+with classes using it, which renders them hardly reusable.\\
 
 While using global variables may be seen as bad practice, and while
 there are alternatives (e.g. dependency injection), these alternatives
 may bring drawbacks such as having the code difficult to read, or the
-intent of the developpers may not be easy to grasp at first glance.
+intent of the developers may not be easy to grasp at first glance.
 Global variables may even be the simplest way of using tools such as a
 Logging classes which is not directly part of the application but only
 here to help debugging. \cite{cite:plSingletonGlobal} \cite{cite:soSingleton}
@@ -66,11 +66,11 @@ Manager...}). The following methods are involved :
 \noindent The abstract factory pattern is a creational pattern which helps creating
 related objects.\\
 
-The example found in jEdit's code is centered around the
+The example found in jEdit's code is centred around the
 \emph{StatusWidgetFactory} interface which must be implemented by all the
-factories related to constructing statusbar widgets. Examples of factories
+factories related to constructing status bar widgets. Examples of factories
 implementing it are \emph{ErrorsWidgetFactory}, \emph{ClockWidgetFactory},
-\emph{LastModifiedWidgetFactory}. Its purpose is to instantiate StatusBar
+\emph{LastModifiedWidgetFactory}. Its purpose is to instantiate \emph{StatusBar}
 widgets without having to specify the concrete class needed to construct it.
 
 \begin{figure}[h!]
@@ -80,7 +80,7 @@ widgets without having to specify the concrete class needed to construct it.
 \end{figure}
 
 \begin{framehint2}
-    \textbf{N.B.} Statusbar widgets also seem to be used as services and are
+    \textbf{N.B.} \emph{Statusbar} widgets also seem to be used as services and are
     listed in the \emph{services.xml} file. This file specifies the services'
     classes or factory classes, names and ways of instantiating them
     (constructor to call).
@@ -88,20 +88,20 @@ widgets without having to specify the concrete class needed to construct it.
     By loading services through an XML file, the program handles the
     instantiation of services the same way for all services. Furthermore, the
     program's code does not need to be modified to add a service, only the
-    xml must be modified; hence, the \emph{ServiceManager} does not need to
+    XML must be modified; hence, the \emph{ServiceManager} does not need to
     depend on all the services' factories and the coupling is reduced.
 \end{framehint2}
 \newpage
 
 \subsection{Observer}
-The Observer is a behavioral pattern, it is justified by the fact that
+The Observer is a behavioural pattern, it is justified by the fact that
 subjects communicate with observers to which they register.\\
 
 The example we chose for this pattern is composed of the
 \emph{Autosave}\footnotemark[1]{}, \emph{ActionListener} \& \emph{Timer} classes.
 The \emph{Autosave} class' purpose is to automatically save all buffers with
 unsaved changes after a certain amount of time has elapsed (default
-value is 30 secondes). This class implements the \emph{ActionListener}
+value is 30 seconds). This class implements the \emph{ActionListener}
 (awt) interface which contains the \emph{actionPerformed()} method. This
 method is called by a subject, here the subject being a \emph{Timer}
 (swing) which calls \emph{actionPerformed()} after the specified amount
@@ -179,14 +179,14 @@ of awt's \emph{ActionListener}.
     They also have another purpose: as stated in \emph{bufferListener}'s
     documentation, this interface may change in the future and thus
     \emph{BufferAdapter} should be subclassed instead.
-    By using \emph{BufferAdapter} instead of \emph{BufferListener}, developpers
+    By using \emph{BufferAdapter} instead of \emph{BufferListener}, developers
     will only have to modify \emph{BufferAdapter} if \emph{BufferListener} is
     modified.
 \end{framehint2}
 \newpage
 
 \subsection{Visitor}
-The visitor design pattern is a behavioral pattern, its purpose being to
+The visitor design pattern is a behavioural pattern, its purpose being to
 separate algorithms from an object structure (e.g. composite).\\
 
 In jEdit's case, the object structure is composed of the following classes:

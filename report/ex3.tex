@@ -26,7 +26,7 @@ programms.
 
 \emph{MiscUtilities} has a coincidental type of cohesion, which
 corresponds to low cohesion. As the class' name implies, it contains
-miscellaneous tools: the developpers did not know where to put them, so
+miscellaneous tools: the developers did not know where to put them, so
 they put them all in one big class with no relation between the members.
 Some possible improvements below.
 
@@ -63,7 +63,7 @@ toolbar). Here are some improvements which could be made :
     could be placed in this class.
 
     \item It seems strange to have \emph{SplashScreen} methods globally
-    accessible and placed in \emph{GUIUtilities}, since the splashscreen
+    accessible and placed in \emph{GUIUtilities}, since the splash screen
     should be shown only once in the application's lifecycle. Moreover,
     these methods could have been moved into jEdit's \emph{SplashScreen}
     class. The \emph{SplashScreen} should have been instantiated in the

@@ -1,6 +1,6 @@
-\section{Exercise 2: Recognize Design Patterns}
+\section{Exercise 2: Recognise Design Patterns}
 
-First of all, please find below a simplified class diagram to visualize
+First of all, please find below a simplified class diagram to visualise
 more easily how the different classes interact.\\
 
 \begin{figure}[h!]
@@ -11,7 +11,7 @@ more easily how the different classes interact.\\
 
 The inner classes \emph{Edit}, \emph{Insert}, \emph{Remove}, \emph{Replace},
 \emph{CompressedReplace}, \emph{CompoundEdit} are part of an implementation of
-the Command design pattern which is a behavioral pattern. \emph{Edit} is an
+the Command design pattern which is a behavioural pattern. \emph{Edit} is an
 abstract class that all commands inherits. Each command must implement an
 \emph{undo()} and a \emph{redo()} action. By using this pattern, each operation
 applied to a buffer (e.g. inserting text, removing text) is instantiated
@@ -23,7 +23,7 @@ expensive memory-wise.\\
 
 The \emph{Edit} abstract class and its children are part of a composite
 design pattern, which is a structural pattern. In this implementation,
-there are no leafs, only composite elments (\emph{Edit} and its
+there are no leafs, only composite elements (\emph{Edit} and its
 children). This pattern is used here in order to retrieve the previous
 and next \emph{Edit}, which is useful for implementing the redo and undo
 queues.
