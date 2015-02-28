@@ -1,7 +1,6 @@
 \section{Exercise 3: Coupling \& Cohesion}
 
 \subsection{Levels of coupling and cohesion}
-% TODO see related links in draft and add them in reference if necessary
 
 \textbf{Cohesion} refers to how related attributes and methods are
 within a class and if they are responding to the class' intention.
@@ -72,7 +71,7 @@ toolbar). Here are some improvements which could be made :
     \emph{main()} method. Finally, why is there a jEdit
     \emph{SplashScreen} class when there is already a way of doing it in
     Swing? It can even be handled by using the \emph{SplashScreen-Image}
-    option in the JAR's manifest file. % TODO ref http://docs.oracle.com/javase/tutorial/uiswing/misc/splashscreen.html
+    option in the JAR's manifest file. \cite{cite:swingSplash}
 \end{itemize}
 
 \begin{framehint2}
@@ -118,20 +117,19 @@ coupled, since they cannot be used independently :
 These two classes share global data through static methods, it implies
 that this is a case of common coupling. Using static methods can lead to
 problematic situations. First of all, dependencies between classes when
-using static methods, since they do not appear as a class' attribute and
-are not part of a method's parameters (they are not visible in the
-class' interface). Static methods can also be accessed from anywhere, it % TODO ref http://tutorials.jenkov.com/ood/understanding-dependencies.html
+using static methods are hidden, since they do not appear as a class' attribute
+and are not part of a method's parameters (they are not visible in the
+class' interface). Static methods can also be accessed from anywhere, it
 is probably safe if they are only used to access data and not modify it,
 but that does not seem to be the case here (e.g.
 \emph{jEdit.setProperty()}). Being able to modify data from anywhere in
 the application makes testing difficult: if a class need to access a
 specific static data, and this data can be anything at any point in the
 application, then it is impossible to test efficiently this class
-because the state of the application is undefined.\\ % TODO reword
+because the state of the application is undefined. \cite{cite:jenkovDependencies}\\
 
 Below are some ideas to reduce coupling between these 2 classes :
 
-% TODO find more ideas
 \begin{itemize}\itemsep1pt
     \item get rid of \emph{GUIUtilities}, and use some other way of handling UI
     (previously talked about UI generated from XML files);
